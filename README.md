@@ -13,18 +13,18 @@ This repository contains pre-trained small-sized **Czech** sentence embedding mo
 
 Our models were trained to generate high-quality sentence embeddings, which can be applied to a range of natural language processing tasks such as similarity search, retrieval, clustering or classification.
 
-You can access the model weights and configuration files through the provided Hugging Face links below.
+You can access the models weights and configuration files through the provided Hugging Face links below.
 
-| *Model*                     | HuggingFace link                                 | Info                                                                                                                                   |
-| --------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| RetroMAE-Small              | [Seznam/retromae-small-cs](link)                 | BERT-small model trained with RetroMAE objective on private Czech corpus with sequence length 512 and embedding size 256               |
-| Dist-MPNet-ParaCrawl        | [Seznam/dist-mpnet-paracrawl-cs-en](link)        | BERT-small model distilled from sentence-transformers mpnet through parallel dataset ParaCrawl                                         |
-| SimCSE-Small-E-Czech        | [Seznam/simcse-small-e-czech](link)              | czech ELECTRA model (small-e-czech) fine-tuned with SimCSE objective to enhance spatial propeties and sentence embeddings of the model |
-| SimCSE-RetroMAE-Small       | [Seznam/simcse-retromae-small-cs](link)          | the RetroMAE-Small fine-tuned with the SimCSE                                                                                          |
-| SimCSE-Dist-MPNet-ParaCrawl | [Seznam/simcse-dist-mpnet-paracrawl-cs-en](link) | the Dist-MPNet-ParaCrawl fine-tuned with the SimCSE                                                                                    |
-|                             |                                                  |                                                                                                                                        |
-| Dist-MPNet-CzEng            | [Seznam/dist-mpnet-czeng-cs-en](link)            | BERT-small model distilled from sentence-transformers mpnet through parallel dataset Czeng                                             |
-| SimCSE-Dist-MPNet-CzEng     | [Seznam/simcse-dist-mpnet-czeng-cs-en](link)     | Dist-MPNet-CzEng fine-tuned with the SimCSE                                                                                            |
+| *Model*                     | HuggingFace link                                 | Info                                                                                                                                                                                                      |
+| --------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RetroMAE-Small              | [Seznam/retromae-small-cs](link)                 | BERT-small model fine-tuned with the RetroMAE objective on a custom Czech corpus. Unlike our other models, it was trained with a sequence length of 512 (128 for others).                                 |
+| Dist-MPNet-ParaCrawl        | [Seznam/dist-mpnet-paracrawl-cs-en](link)        | BERT-small model distilled from the `sentence-transformers/all-mpnet-base-v2` model, using parallel cs-en dataset ParaCrawl for training.                                                                 |
+| SimCSE-Small-E-Czech        | [Seznam/simcse-small-e-czech](link)              | Czech ELECTRA model (small-e-czech) fine-tuned with the SimCSE objective to enhance sentence embeddings.                                                                                                  |
+| SimCSE-RetroMAE-Small       | [Seznam/simcse-retromae-small-cs](link)          | The RetroMAE-Small model fine-tuned with the SimCSE.                                                                                                                                                      |
+| SimCSE-Dist-MPNet-ParaCrawl | [Seznam/simcse-dist-mpnet-paracrawl-cs-en](link) | The Dist-MPNet-ParaCrawl model fine-tuned with the SimCSE.                                                                                                                                                |
+|                             |                                                  |                                                                                                                                                                                                           |
+| Dist-MPNet-CzEng            | [Seznam/dist-mpnet-czeng-cs-en](link)            | BERT-small model BERT-small model distilled from the `sentence-transformers/all-mpnet-base-v2` model, using parallel cs-en dataset Czeng for training. Exclusively accessible under the CC-BY-NC license. |
+| SimCSE-Dist-MPNet-CzEng     | [Seznam/simcse-dist-mpnet-czeng-cs-en](link)     | The Dist-MPNet-CzEng fine-tuned with the SimCSE. Exclusively accessible under the CC-BY-NC license.                                                                                                       |
 
 You can easily use the pre-trained models in your own applications or projects:
 
@@ -101,3 +101,23 @@ Intrinsic (semantic analysis) and extrinsic (real world NLP tasks), were conduct
 ## Evaluation Pipeline
 
 Coming soon, stay tuned for updates.
+
+## Acknowledgements
+
+If you find our work helpful, please consider citing us:
+
+TODO
+```
+@article{,
+  title={Some Like It Small: Czech Semantic Embedding Models for Industry Applications},
+  volume={},
+  url={},
+  DOI={},
+  number={},
+  journal={},
+  author={},
+  year={2024},
+  month={},
+  pages={}
+}
+```
