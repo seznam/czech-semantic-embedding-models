@@ -19,7 +19,7 @@ You can access the models weights and configuration files through the provided H
 
 | *Model*                     | HuggingFace link                                                                                            | Info                                                                                                                                                                                                      |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RetroMAE-Small              | [Seznam/retromae-small-cs](https://huggingface.co/Seznam/retromae-small-cs)                                 | BERT-small model fine-tuned with the RetroMAE objective on a custom Czech corpus. Unlike our other models, it was trained with a sequence length of 512 (128 for others).                                 |
+| RetroMAE-Small              | [Seznam/retromae-small-cs](https://huggingface.co/Seznam/retromae-small-cs)                                 | BERT-small model trained with the RetroMAE objective on a custom Czech corpus.                                                                                                                            |
 | Dist-MPNet-ParaCrawl        | [Seznam/dist-mpnet-paracrawl-cs-en](https://huggingface.co/Seznam/dist-mpnet-paracrawl-cs-en)               | BERT-small model distilled from the `sentence-transformers/all-mpnet-base-v2` model, using parallel cs-en dataset ParaCrawl for training.                                                                 |
 | Dist-MPNet-CzEng            | [Seznam/dist-mpnet-czeng-cs-en](https://huggingface.co/Seznam/dist-mpnet-czeng-cs-en)                       | BERT-small model BERT-small model distilled from the `sentence-transformers/all-mpnet-base-v2` model, using parallel cs-en dataset Czeng for training. Exclusively accessible under the CC-BY-NC license. |
 |                             |                                                                                                             |                                                                                                                                                                                                           |
@@ -48,6 +48,8 @@ batch_dict = tokenizer(input_texts, max_length=128, padding=True, truncation=Tru
 
 outputs = model(**batch_dict)
 embeddings = outputs.last_hidden_state[:, 0] # CLS
+
+similarity = torch.nn.functional.cosine_similarity(embeddings[0], embeddings[1], dim=0)
 ```
 
 ## Evaluation Results
@@ -95,6 +97,7 @@ Intrinsic (semantic tasks) and extrinsic (real world NLP tasks), were conducted 
 | RetroMAE-Small              | 76.85          | 84.58           | 45.29            |
 | Dist-MPNet-ParaCrawl        | 77.42          | 86.02           | 45.55            |
 | Dist-MPNet-CzEng            | ***78.73***    | 85.85           | ***45.75***      |
+|                             |                |                 |                  |
 | SimCSE-Small-E-Czech        | 76.27          | 68.33           | 44.64            |
 | SimCSE-RetroMAE-Small       | 76.16          | 84.95           | 45.26            |
 | SimCSE-Dist-MPNet-ParaCrawl | 77.31          | ***86.10***     | 45.66            |
@@ -118,7 +121,7 @@ TODO
   DOI={},
   number={},
   journal={},
-  author={Jiří Bednář, Jakub Náplava, Petra Barančíková, Ondřej Lisický},
+  author={Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Ondřej, Lisický},
   year={2024},
   month={},
   pages={}
