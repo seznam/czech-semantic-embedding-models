@@ -1,13 +1,13 @@
 # Czech Sentence Embedding Models
 
-This repository contains pre-trained small-sized **Czech** sentence embedding models developed and evaluated as part of our research paper [Some Like It Small: Czech Semantic Embedding Models for Industry Applications](#Acknowledgements)
+This repository contains pre-trained small-sized **Czech** sentence embedding models developed and evaluated as part of our research paper [Some Like It Small: Czech Semantic Embedding Models for Industry Applications](https://arxiv.org/abs/2311.13921)
 
 
 ## Repository Contents
 
-- [Released models](#Released-Models)
-- [Evaluation results](#Evaluation-Results)
-- [Evaluation scripts](#Evaluation-Pipeline)
+- [Released models](#released-models)
+- [Evaluation results](#evaluation-results)
+- [Evaluation scripts](#evaluation-pipeline)
 
 ## Released Models
 
@@ -25,7 +25,7 @@ You can access the models weights and configuration files through the provided H
 |                             |                                                                                                             |                                                                                                                                                                                                           |
 | SimCSE-RetroMAE-Small       | [Seznam/simcse-retromae-small-cs](https://huggingface.co/Seznam/simcse-retromae-small-cs)                   | The RetroMAE-Small model fine-tuned with the SimCSE.                                                                                                                                                      |
 | SimCSE-Dist-MPNet-ParaCrawl | [Seznam/simcse-dist-mpnet-paracrawl-cs-en](https://huggingface.co/Seznam/simcse-dist-mpnet-paracrawl-cs-en) | The Dist-MPNet-ParaCrawl model fine-tuned with the SimCSE.                                                                                                                                                |
-| SimCSE-Dist-MPNet-CzEng     | [Seznam/simcse-dist-mpnet-czeng-cs-en](https://huggingface.co/Seznam/simcse-dist-mpnet-czeng-cs-en)          | The Dist-MPNet-CzEng fine-tuned with the SimCSE. Exclusively accessible under the CC-BY-NC license.                                                                                                       |
+| SimCSE-Dist-MPNet-CzEng     | [Seznam/simcse-dist-mpnet-czeng-cs-en](https://huggingface.co/Seznam/simcse-dist-mpnet-czeng-cs-en)         | The Dist-MPNet-CzEng fine-tuned with the SimCSE. Exclusively accessible under the CC-BY-NC license.                                                                                                       |
 | SimCSE-Small-E-Czech        | [Seznam/simcse-small-e-czech](https://huggingface.co/Seznam/simcse-small-e-czech)                           | Czech ELECTRA model (small-e-czech) fine-tuned with the SimCSE objective to enhance sentence embeddings.                                                                                                  |
 
 You can easily use the pre-trained models in your own applications or projects:
@@ -54,7 +54,7 @@ similarity = torch.nn.functional.cosine_similarity(embeddings[0], embeddings[1],
 
 ## Evaluation Results
 
-Intrinsic (semantic tasks) and extrinsic (real world NLP tasks), were conducted to understand each model's performance. Public Czech datasets were used for these evaluations [paper link]().
+Intrinsic (semantic tasks) and extrinsic (real world NLP tasks), were conducted to understand each model's performance. Public Czech datasets were used for these evaluations [paper link](https://arxiv.org/abs/2311.13921).
 
 ### Zero-shot
 
@@ -106,13 +106,60 @@ Intrinsic (semantic tasks) and extrinsic (real world NLP tasks), were conducted 
 
 ## Evaluation Pipeline
 
-Coming soon, stay tuned for updates.
+This repository provides an evaluation pipeline for all the tasks above. Specific evaluation scripts are included for each task, with the script named `evaluate_{task}.py`. The pipeline supports three evaluation modes:
+
+- Whole model fine-tuning evaluation (use `--model_path`).
+- Model linear probing evaluation (use `--model_path` `--head_only`).
+- Embedding evaluation (use `--eval_embeddings`).
+  
+To evaluate all datasets simultaneously, you can use the `evaluate_all.py` script. Customize the tasks to evaluate by adjusting the `TASKS` variable in the script. Results will be saved in the `results/{timestamp}_{name}.txt` file, and you can change the output filename using the `--name` argument.
+
+#### Important
+
+- Some datasets may not be downloaded automatically, please see [README](data/README.md).
+- All evaluations are expected to run on 1 gpu, which should be specified using CUDA_VISIBLE_DEVICES.
+- Task mapping
+  - `facebook` task uses CFD dataset
+  - `relevance` task uses DareCzech dataset
+  - `ctdc` uses CTDC
+  - `sts` uses images, hard, free, see [this](data/README.md)
+  - `costra` uses COSTRA sentences
+
+#### Arguments
+
+| Argument                           | Description                                                                                                                                                                                                                                                                                                      |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-m FILE`, `--model_path FILE`     | Specify the name or path to your model. It should be possible to load it using the `transformers.AutoModel` API.                                                                                                                                                                                                 |
+| `-t FILE`, `--tokenizer_path FILE` | Provide the path to your tokenizer. Set this only when `--tokenizer_path` differs from `--model_path`.                                                                                                                                                                                                           |
+| `--head_only`                      | Activate linear probing mode, which freezes the model embeddings.                                                                                                                                                                                                                                                |
+| `--eval_embeddings FILE`           | Evaluate pre-calculated embeddings. Input should be the path to a pickle file containing a Python dictionary with the format `{text[str]: embedding[torch.tensor]}`. The dictionary should contain a constant-sized tensor for every text in the evaluation. To obtain all text, refer to `external_embeddings.py`. |
+| `--debug`                          | Enable debug mode.                                                                                                                                                                                                                                                                                               |
+
+#### Examples
+```
+pip install -r requirements.txt
+
+# eval on STS
+CUDA_VISIBLE_DEVICES=0 python3 evaluate_facebook.py -m Seznam/retromae-small-cs
+
+# eval ALL - linear probing
+CUDA_VISIBLE_DEVICES=0 python3 evaluate_all.py -m Seznam/retromae-small-cs --head_only
+
+# eval ALL - embeddings
+CUDA_VISIBLE_DEVICES=0 python3 evaluate_all.py --eval_embeddings embeddings_dictionary.pkl
+```
 
 ## Acknowledgements
 
 If you find our work helpful, please consider citing us:
+```
+Title: Some Like It Small: Czech Semantic Embedding Models for Industry Applications
+Authors: Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Lisický, Ondřej
+DOI: 10.48550/arXiv.2311.13921
+```
 
-TODO
+
+The IAAI version will be up once the proceedings are published.
 ```
 @article{,
   title={Some Like It Small: Czech Semantic Embedding Models for Industry Applications},
@@ -121,7 +168,7 @@ TODO
   DOI={},
   number={},
   journal={},
-  author={Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Ondřej, Lisický},
+  author={Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Lisický, Ondřej},
   year={2024},
   month={},
   pages={}
