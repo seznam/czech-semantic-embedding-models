@@ -152,25 +152,16 @@ CUDA_VISIBLE_DEVICES=0 python3 evaluate_all.py --eval_embeddings embeddings_dict
 ## Acknowledgements
 
 If you find our work helpful, please consider citing us:
-```
-Title: Some Like It Small: Czech Semantic Embedding Models for Industry Applications
-Authors: Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Lisický, Ondřej
-DOI: 10.48550/arXiv.2311.13921
-```
 
-
-The IAAI version will be up once the proceedings are published.
 ```
-@article{,
+@inproceedings{bednavr2024some,
   title={Some Like It Small: Czech Semantic Embedding Models for Industry Applications},
-  volume={},
-  url={},
-  DOI={},
-  number={},
-  journal={},
-  author={Bednář, Jiří and Náplava, Jakub and Barančíková, Petra and Lisický, Ondřej},
-  year={2024},
-  month={},
-  pages={}
+  author={Bedn{\'a}{\v{r}}, Ji{\v{r}}{\'\i} and N{\'a}plava, Jakub and Baran{\v{c}}{\'\i}kov{\'a}, Petra and Lisick{\`y}, Ond{\v{r}}ej},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={38},
+  number={21},
+  pages={22734--22742},
+  year={2024}
 }
+
 ```
